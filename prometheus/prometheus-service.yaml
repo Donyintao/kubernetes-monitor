@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus
+  namespace: monitoring
+  annotations:
+    prometheus.io/scrape: 'true'
+spec:
+  ports:
+    - name: web-ui
+      protocol: TCP
+      port: 80
+      targetPort: 9090
+  selector:
+    k8s-app: prometheus

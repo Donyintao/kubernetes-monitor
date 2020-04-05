@@ -16,11 +16,12 @@ spec:
       serviceAccountName: prometheus
       containers:
       - name: prometheus
-        image: prom/prometheus:v2.11.1
+        image: prom/prometheus:v2.17.1
         args:
           - '--config.file=/etc/prometheus/prometheus.yml'
           - '--storage.tsdb.path=/prometheus/data'
           - '--storage.tsdb.retention=7d'
+          - '--web.enable-lifecycle'
         ports:
         - name: webui
           containerPort: 9090
