@@ -8,9 +8,9 @@ data:
     global:
       resolve_timeout: 5m
       smtp_smarthost: 'smtp.partner.outlook.cn:587'
-      smtp_from: 'yingtao.dong@bespinglobal.cn'
-      smtp_auth_username: 'yingtao.dong@bespinglobal.cn'
-      smtp_auth_password: 'DANyi1314.com'
+      smtp_from: 'xxxxxx@gmail.com'
+      smtp_auth_username: 'xxxxxx@gmail.com'
+      smtp_auth_password: 'xxxxxx'
       smtp_require_tls: true
 
     templates:
