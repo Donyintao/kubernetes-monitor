@@ -6,11 +6,15 @@ metadata:
 data:
   config.yml: |-
     global:
-      resolve_timeout: 60m
-      smtp_smarthost: 'smtp.gmail.com:465'
-      smtp_from: 'alertmanager@gmail.com'
-      smtp_auth_username: 'alertmanager@gmail.com'
-      smtp_auth_password: 'alertmanager_passwd'
+      resolve_timeout: 5m
+      smtp_smarthost: 'smtp.partner.outlook.cn:587'
+      smtp_from: 'yingtao.dong@bespinglobal.cn'
+      smtp_auth_username: 'yingtao.dong@bespinglobal.cn'
+      smtp_auth_password: 'DANyi1314.com'
+      smtp_require_tls: true
+
+    templates:
+      - '/etc/alertmanager/templates/*.tmpl'
 
     route:
       group_by: ['alertname']
@@ -22,10 +26,7 @@ data:
     receivers:
     - name: 'Email_Alert'
       email_configs:
-      - to: 'user_two@email.com'
+      - to: '540855184@qq.com'
+        html: '{{ template "email.html" . }}'
+        headers: { Subject: "[{{ .Status | toUpper }}] {{ .CommonLabels.severity }}: {{ .CommonAnnotations.summary }}" }
         send_resolved: true 
-      - to: 'user_one@email.com'
-        send_resolved: true 
-      webhook_configs:
-      - send_resolved: true
-        url: 'http://alert.k8s.com/api/alert'
