@@ -4,9 +4,13 @@ metadata:
   name: email-config
   namespace: monitoring
 data:
-  email.tmpl: |-
-    {{ define "email.html" }}
-    {{- if gt (len .Alerts.Firing) 0 -}}{{ range .Alerts }}
+  node.email.default.tmpl: |-
+    {{ define "node.email.default.html" }}
+      {{ if gt (len .Alerts.Firing) 0 }}
+        [{{ .Alerts.Firing | len }}] Firing
+      {{ end }}
+
+    {{ range .Alerts.Firing }}
     <pre>
     告警实例: {{ .Labels.instance }}
     告警时间: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
@@ -16,9 +20,14 @@ data:
     告警状态: {{ .Status }}
     </pre>
     {{ end }}
-    {{ end -}}
-    
-    {{- if gt (len .Alerts.Resolved) 0 -}}{{ range .Alerts }}
+
+    {{ if gt (len .Alerts.Resolved) 0 }}
+      {{ if gt (len .Alerts.Firing) 0 }}
+      {{ end }}
+      [{{ .Alerts.Resolved | len }}] Resolved
+    {{ end }}
+
+    {{ range .Alerts.Resolved }}
     <pre>
     告警实例: {{ .Labels.instance }}
     告警时间: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
@@ -29,5 +38,4 @@ data:
     告警状态: {{ .Status }}
     </pre>
     {{ end }}
-    {{ end -}}
-    {{- end }}
+    {{ end }}

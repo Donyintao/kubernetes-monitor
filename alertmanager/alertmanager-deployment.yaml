@@ -37,7 +37,7 @@ spec:
         - name: tz-config
           mountPath: /etc/localtime
         - name: email-config
-          mountPath: /etc/alertmanager/templates
+          mountPath: /etc/alertmanager/template
       volumes:
       - name: config-volume
         configMap:

@@ -14,19 +14,28 @@ data:
       smtp_require_tls: true
 
     templates:
-      - '/etc/alertmanager/templates/*.tmpl'
+      - '/etc/alertmanager/template/*.tmpl'
 
     route:
-      group_by: ['alertname']
+      group_by: [cluster, alertname]
       group_wait: 30s
       group_interval: 1m
       repeat_interval: 30m
-      receiver: Email_Alert
+      receiver: Default-Receiver
+      routes:
+      - receiver: 'Email_Alert'
+        match:
+          namespace: 'testing'
 
     receivers:
+    - name: 'Default-Receiver'
+      email_configs:
+      - to: '1316163109@qq.com'
+        send_resolved: true 
+
     - name: 'Email_Alert'
       email_configs:
       - to: '540855184@qq.com'
-        html: '{{ template "email.html" . }}'
+        html: '{{ template "node.email.default.html" . }}'
         headers: { Subject: "[{{ .Status | toUpper }}] {{ .CommonLabels.severity }}: {{ .CommonAnnotations.summary }}" }
         send_resolved: true 
